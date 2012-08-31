@@ -12,6 +12,7 @@ while true; do
     cp src/Makefile src/main.c work
 
     cd u8glib
+    hg pull
     hg update
     ID=$(hg log | head -n1 | grep -oE '[[:digit:]]+:[[:xdigit:]]+')
     cp csrc/* fntsrc/* ../work
