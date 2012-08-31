@@ -24,7 +24,7 @@ while true; do
     sleep 30
     cd src
     mplayer -vo jpeg tv:// -tv driver=v4l2:device=/dev/video0 -frames 1
-    mv 00000001.jpg "snapshot-${date +"%F-%T"}-${ID}.jpg"
+    mv 00000001.jpg "snapshot-$(date +"%F-%T")-${ID}.jpg"
     git add *.jpg
     git commit -m "CRON"
     git push
