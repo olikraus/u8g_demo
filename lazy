@@ -25,6 +25,6 @@ cd src
 mplayer -vo jpeg tv:// -tv driver=v4l2:device=/dev/video0 -frames 1
 mv 00000001.jpg "snapshot-${ID}.jpg"
 git add *.jpg
-git commit "CRON"
+git commit -m "CRON"
 git push
 cd ..
