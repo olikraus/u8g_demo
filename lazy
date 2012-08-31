@@ -1,0 +1,26 @@
+#!/bin/sh
+
+cd /home/mak/src/u8g_demo
+
+rm -rf work
+mkdir work
+
+cp src/Makefile src/main.c work
+
+cd u8glib
+hg update
+ID=$(hg log | head -n1 | grep -oE '[[:digit:]]+:[[:xdigit:]]+')
+cp csrc/* fntsrc/* ../work
+cd ..
+
+cd work
+make all upload
+cd ..
+
+sleep 90
+cd src
+mplayer -vo jpeg tv:// -tv driver=v4l2:device=/dev/video0 -frames 1
+mv 00000001.jpg "${ID}.jpg"
+git add *.jpg
+git commit "CRON"
+git push
