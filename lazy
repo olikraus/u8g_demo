@@ -1,30 +1,34 @@
 #!/bin/sh
 
-cd /home/mak/src/u8g_demo
+while true; do
+    cd /home/mak/src/u8g_demo
 
-cd src
-git pull
-cd ..
+    cd src
+    git pull
+    cd ..
 
-rm -rf work
-mkdir work
-cp src/Makefile src/main.c work
+    rm -rf work
+    mkdir work
+    cp src/Makefile src/main.c work
 
-cd u8glib
-hg update
-ID=$(hg log | head -n1 | grep -oE '[[:digit:]]+:[[:xdigit:]]+')
-cp csrc/* fntsrc/* ../work
-cd ..
+    cd u8glib
+    hg update
+    ID=$(hg log | head -n1 | grep -oE '[[:digit:]]+:[[:xdigit:]]+')
+    cp csrc/* fntsrc/* ../work
+    cd ..
 
-cd work
-make all upload
-cd ..
+    cd work
+    make all upload
+    cd ..
 
-sleep 90
-cd src
-mplayer -vo jpeg tv:// -tv driver=v4l2:device=/dev/video0 -frames 1
-mv 00000001.jpg "snapshot-${date +"%F-%T"}-${ID}.jpg"
-git add *.jpg
-git commit -m "CRON"
-git push
-cd ..
+    sleep 30
+    cd src
+    mplayer -vo jpeg tv:// -tv driver=v4l2:device=/dev/video0 -frames 1
+    mv 00000001.jpg "snapshot-${date +"%F-%T"}-${ID}.jpg"
+    git add *.jpg
+    git commit -m "CRON"
+    git push
+    cd ..
+
+    sleep 300
+done
