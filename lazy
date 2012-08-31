@@ -2,9 +2,12 @@
 
 cd /home/mak/src/u8g_demo
 
+cd src
+git pull
+cd ..
+
 rm -rf work
 mkdir work
-
 cp src/Makefile src/main.c work
 
 cd u8glib
@@ -20,7 +23,8 @@ cd ..
 sleep 90
 cd src
 mplayer -vo jpeg tv:// -tv driver=v4l2:device=/dev/video0 -frames 1
-mv 00000001.jpg "${ID}.jpg"
+mv 00000001.jpg "snapshot-${ID}.jpg"
 git add *.jpg
 git commit "CRON"
 git push
+cd ..
